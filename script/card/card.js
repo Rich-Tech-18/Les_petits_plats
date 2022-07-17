@@ -11,12 +11,7 @@ export default class DisplayInReceips {
         this.description = description;
         this.appliance = appliance;
         this.ustensils = ustensils;
-    }
-
-    test(){
-        return console.log(this.id, this.name, this.servings, this.ingredients, this.time, this.description, this.appliance, this.ustensils)
-    }
-
+    };
     
     createCardReceips(){
         
@@ -43,20 +38,33 @@ export default class DisplayInReceips {
         divHeader.appendChild(title);
         divHeader.appendChild(divTimer);
         divBody.appendChild(ul);
+        let dataIngredient = '';
         this.ingredients.forEach(ingredient => {
             
             const li = document.createElement('li');
             if(ingredient.quantity === undefined){
                 li.innerText = ingredient.ingredient;
+               
             }
             else if(ingredient.unit === undefined){
                 li.innerText = ingredient.ingredient + ' : '  + ingredient.quantity;
             }
             else{
-            li.innerText = ingredient.ingredient + ' : '  + ingredient.quantity + ' ' + ingredient.unit;   
+            li.innerText = ingredient.ingredient + ' : '  + ingredient.quantity + ' ' + ingredient.unit;
+             
             }
+            dataIngredient += ingredient.ingredient + ' ';
+            article.setAttribute('data-ingredient', dataIngredient);
             ul.appendChild(li);
         })
+        let dataAppliance = '';
+        dataAppliance += this.appliance + ' ';
+        article.setAttribute('data-appliance', dataAppliance);
+        let dataUstensils = '';
+        this.ustensils.forEach(ustensil => {
+            dataUstensils += ustensil + ' ';
+            article.setAttribute('data-ustenils', dataUstensils);
+        });
         text.innerText = this.description;
         divBody.appendChild(text);
         article.appendChild(img);
@@ -65,7 +73,29 @@ export default class DisplayInReceips {
 
         return article
         
-    }
+    };
+
+ 
+    // displayLiInput(){
+    //     const listOfIngredient = document.querySelector('#ingredients');
+    //     const single = [];
+    //     this.ingredients.forEach(list => {
+    //         single.push(list.ingredient);
+            
+    //     });
+
+    //     const singleI = new Set(single);
+    //     const arr = Array.from(singleI)
+    //     // arr.sort();
+    //     arr.slice(0, 30).forEach(function(e){
+    //         const list = document.createElement('li');
+    //         list.innerText = e;
+    //         listOfIngredient.appendChild(list);
+           
+    //     });
+    //     console.log(singleI);
+    //      return listOfIngredient;
+    // }
 }
 
 
