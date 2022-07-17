@@ -27,55 +27,51 @@ export let recips = [];
 function isAllHide(elem){
     return elem.classList.value === "card hide";
 }
+
+input.addEventListener('input', function(e){
+    errorMessage.classList.add('hide');
+    const value = e.target.value.toLowerCase();
+    const allArticle = Array.from(document.querySelectorAll(".receips-display article"));
+    const regex = /^[a-zA-Z]{3,}/;
+    if(regex.test(value)){
+        recips.forEach(visibile => {
+        const isVisible = visibile.title.toLowerCase().includes(value) || visibile.ingredients.toLowerCase().includes(value) || visibile.ustensils.toLowerCase().includes(value) || visibile.appliances.toLowerCase().includes(value);
+        visibile.element.classList.toggle("hide", !isVisible);
+        
+    });
+    if(allArticle.every(isAllHide)){
+        errorMessage.classList.remove('hide');
+    }
+    }
+else{
+    recips.forEach(visible => {
+        visible.element.classList.remove("hide");
+    })
+}   
+})
+
 // input.addEventListener('input', function(e){
 //     errorMessage.classList.add('hide');
 //     const value = e.target.value.toLowerCase();
 //     const allArticle = Array.from(document.querySelectorAll(".receips-display article"));
 //     const regex = /^[a-zA-Z]{3,}/;
 //     if(regex.test(value)){
-//         recips.forEach(visibile => {
-//         const isVisible = visibile.title.toLowerCase().includes(value) || visibile.ingredients.toLowerCase().includes(value) || visibile.ustensils.toLowerCase().includes(value) || visibile.appliances.toLowerCase().includes(value);
-//         visibile.element.classList.toggle("hide", !isVisible);
+//     for(let i =0; i<recips.length; i++) {
+//         const isVisible = recips[i].title.toLowerCase().includes(value) || recips[i].ingredients.toLowerCase().includes(value) || recips[i].ustensils.toLowerCase().includes(value) || recips[i].appliances.toLowerCase().includes(value);
+//         recips[i].element.classList.toggle("hide", !isVisible);
         
-//     });
+//     };
 //     if(allArticle.every(isAllHide)){
 //         errorMessage.classList.remove('hide');
-//     }
-//     }
-// else{
-//     recips.forEach(visible => {
-//         visible.element.classList.remove("hide");
-//     })
+//     };
 // }
-         
+// else{
+//     for(let i = 0; i<recips.length; i++) {
+//         recips[i].element.classList.remove("hide");
+//     }
     
-   
-    
+// }
 // })
-
-input.addEventListener('input', function(e){
-    errorMessage.classList.add('hide');
-    const value = e.target.value.toLowerCase();
-    const allArticle = Array.from(document.querySelectorAll(".receips-display article"));
-    const sectionArticle = document.querySelector(".receips-display");
-    const regex = /^[a-zA-Z]{3,}/;
-    if(regex.test(value)){
-    for(let i =0; i<recips.length; i++) {
-        const isVisible = recips[i].title.toLowerCase().includes(value) || recips[i].ingredients.toLowerCase().includes(value) || recips[i].ustensils.toLowerCase().includes(value) || recips[i].appliances.toLowerCase().includes(value);
-        recips[i].element.classList.toggle("hide", !isVisible);
-        
-    };
-    if(allArticle.every(isAllHide)){
-        errorMessage.classList.remove('hide');
-    };
-}
-else{
-    recips.forEach(visible => {
-        visible.element.classList.remove("hide");
-    })
-    
-}
-})
 
 recips = recipsData.map(elem => {
                 let ingredientTag = '';
