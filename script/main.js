@@ -2,7 +2,7 @@
 
 async function getRecips() {
     // recupere les recettes du fichier json
-    return fetch("../data/recipes.json")
+    return fetch("https://rich-tech-18.github.io/Les_petits_plats_30-05-2022/data/recipes.json")
     .then(reponse =>  reponse.json())
     .then( data  => {return data.receips;})
     .catch((err) => console.log(err));
