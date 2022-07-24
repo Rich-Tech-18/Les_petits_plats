@@ -15,6 +15,7 @@ let selections = [];
 
 let ingredients = [];  
     recipsData.forEach(element => {
+        // créer le tableau pour la liste des ingredients
         element.ingredients.forEach(ingredient => {
            ingredients.push(ingredient.ingredient);
            return ingredients;
@@ -28,10 +29,12 @@ let ingredientFilter = ingredients.filter((elem, pos) => ingredients.indexOf(ele
 
 
 const appliance = recipsData.map(appliance => appliance.appliance);
+ // créer le tableau pour la liste des appareils
 let applianceFilter = appliance.filter((elem, pos) => appliance.indexOf(elem) === pos);
 
 const ustensils = [];
     recipsData.forEach(element => {
+         // créer le tableau pour la liste des ustensils
         element.ustensils.forEach(ustensil => {
             ustensils.push(ustensil);
             return ustensils;
@@ -39,7 +42,7 @@ const ustensils = [];
     });
 let ustensilFilter = ustensils.filter((elem, pos) => ustensils.indexOf(elem) === pos);
 
-
+    // si l'input des tags n'est pas active, alors, la fléche pointe vers le bas
     inputIngredient.addEventListener('focusout', function(){
         arrowIngredient.style.transform = 'translate(-25px, 15px) rotate(0deg)';
         })
@@ -52,36 +55,42 @@ let ustensilFilter = ustensils.filter((elem, pos) => ustensils.indexOf(elem) ===
         })
 
     inputIngredient.addEventListener('click', (e) => {
+        // si le input est cliquer, fait apparaitre la liste des elements
         listOfIngredient.innerHTML = '';
         listDisplay(e, ingredientFilter, 'ingredient', listOfIngredient, arrowIngredient);
         verifChipsAndList();
     });
 
     inputIngredient.addEventListener('keyup', (e) => {
+        // si un mot en rechercher de le input, fait apparaitre la liste des elements
         listOfIngredient.innerHTML = '';
         listDisplay(e, ingredientFilter, 'ingredient', listOfIngredient, arrowIngredient);
         verifChipsAndList();
     });
 
     inputAppliance.addEventListener('click', (e) => {
+        // si le input est cliquer, fait apparaitre la liste des elements
         listOfAppliance.innerHTML = '';
         listDisplay(e, applianceFilter, 'appliance', listOfAppliance, arrowAppliance);
         verifChipsAndList();
     });
 
     inputAppliance.addEventListener('keyup', (e) => {
+        // si un mot en rechercher de le input, fait apparaitre la liste des elements
         listOfAppliance.innerHTML = '';
         listDisplay(e, applianceFilter, 'appliance', listOfAppliance, arrowAppliance);
         verifChipsAndList();
     });
 
     inputUstensil.addEventListener('click', (e) => {
+        // si le input est cliquer, fait apparaitre la liste des elements
         listOfUstensils.innerHTML = '';
         listDisplay(e, ustensilFilter, 'ustensils', listOfUstensils, arrowUstensile);
         verifChipsAndList();
     });
 
     inputUstensil.addEventListener('keyup', (e) => {
+        // si un mot en rechercher de le input, fait apparaitre la liste des elements
         listOfUstensils.innerHTML = '';
         listDisplay(e, ustensilFilter, 'ustensils', listOfUstensils, arrowUstensile);
         verifChipsAndList();
@@ -89,7 +98,9 @@ let ustensilFilter = ustensils.filter((elem, pos) => ustensils.indexOf(elem) ===
 
     
     function listDisplay(element, array, classListName, inputOfSelection, arrow){
+        // affiche une list en fonction du input tag selectionner, et si ce mot est cliquer, alors il se mets en display none et fait apparaitre une div
         const resultat = array.filter( result => result.toLowerCase().includes(element.target.value.toLowerCase()));
+        const inputValue = document.querySelector('#inputSelection');
         arrow.style.transform = 'translate(-25px, 10px) rotate(180deg)';
         
         
@@ -105,8 +116,11 @@ let ustensilFilter = ustensils.filter((elem, pos) => ustensils.indexOf(elem) ===
             divChips.appendChild(chips);
             verifChipsAndList();
             search = e.target.textContent;
-            displayrecipsData(search);
+            displayrecipsData(search, inputValue.value);
             updateTagListener();
+            inputIngredient.value = '';
+            inputAppliance.value = '';
+            inputUstensil.value = '';
             }, {once:true});
         })
         
@@ -117,8 +131,12 @@ let ustensilFilter = ustensils.filter((elem, pos) => ustensils.indexOf(elem) ===
 
 
 
-    function updateTagListener(){
-
+function updateTagListener(){
+    //si le tag est supprimer, fait une boucle sur les div tag selectionner restante, et affiche les recettes
+    const inputValue = document.querySelector('#inputSelection');
+    const errorMessage = document.querySelector('#errorMessage');
+    
+    
     Array.from(document.querySelectorAll('.chipsSelected img')).forEach(element => {
         element.addEventListener('click', function(e){
             const article = document.querySelectorAll('.hide');
@@ -127,13 +145,16 @@ let ustensilFilter = ustensils.filter((elem, pos) => ustensils.indexOf(elem) ===
                     arr.classList.remove("hide");
                 }
             })
-           
-            e.target.parentNode.remove();
-            Array.from(document.querySelectorAll('.chipsSelected')).forEach(str => {
-               displayrecipsData( str.textContent); 
+            e.target.parentNode.remove(); 
+            errorMessage.classList.add('hide');
+            if(Array.from(document.querySelectorAll('.chipsSelected')).length === 0){
+                displayrecipsData( '', inputValue.value); 
+            }else{
+                 Array.from(document.querySelectorAll('.chipsSelected')).forEach(str => {
+               displayrecipsData( str.textContent, inputValue.value); 
+               
             })
-            
-            
+            }
             
         })
     })
@@ -141,7 +162,9 @@ let ustensilFilter = ustensils.filter((elem, pos) => ustensils.indexOf(elem) ===
 
    
     
-    function verifChipsAndList(){
+function verifChipsAndList(){
+    // fonction qui compare les list et les tag, si un tag est afficher, alors le mot de list ce met en display none, et verifie les data attribute des recettes restante
+    // pour afficher dans les list que celle qui sont selectionner
         const chipsText = document.querySelectorAll('.chips div');
         const listElementIngredient = document.querySelectorAll('.ingredient');
         const listElementAppliance = document.querySelectorAll('.appliance');
@@ -275,25 +298,36 @@ chipsText.forEach(element => {
     };
     
 
-    function displayrecipsData(str){
+export function displayrecipsData(str, strInput){
+    // fonction qui affiche les recettes selectionner
             const value = str.toLowerCase();
-            recips.forEach(arr => {
-                if(arr.element.className === 'card') {
-            };
-          })
-            
-            recips.forEach(visibile => {
+            const input = strInput.toLowerCase();        
+        if(input === ''){
+          recips.forEach(visibile => {
                 if(visibile.element.className === 'card'){
                     const isVisible = visibile.ingredients.toLowerCase().includes(value) || visibile.ustensils.toLowerCase().includes(value) || visibile.appliances.toLowerCase().includes(value);
                     visibile.element.classList.toggle("hide", !isVisible);
                 }
              
-            }) ;
+            });  
+        }else{ 
+            recips.forEach(visibile => {
+                if(visibile.element.className === 'card'){
+                    const isVisible = (visibile.ingredients.toLowerCase().includes(value) || visibile.ustensils.toLowerCase().includes(value) || visibile.appliances.toLowerCase().includes(value)) && (visibile.ingredients.toLowerCase().includes(input) || visibile.ustensils.toLowerCase().includes(input) || visibile.appliances.toLowerCase().includes(input));
+                    visibile.element.classList.toggle("hide", !isVisible);
+                }
+             
+            }); 
+        }
+            
+
+
             
     };
     
 
     function colorChips(){
+        //fonction qui colore la div des tag en fonction du mot selectionner
         const chips = document.querySelectorAll('.chips div');
         chips.forEach(element => {
             ingredients.forEach(ingredient => {

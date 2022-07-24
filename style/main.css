@@ -262,14 +262,14 @@ section {
 }
 
 .dropdown-toggle:focus{
-    width: 325px;
+    width: 500px;
 }
 
 #errorMessage{
     position: absolute;
     font-weight: 600;
     }
-
+    
 @media screen and (max-width: 654px) {
     .receips-display{
         display: flex;
