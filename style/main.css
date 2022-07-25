@@ -178,11 +178,7 @@ section {
 
 
 
-#ingredients{
-    background-color: #0d6efd;
-    color: white;
-    width: 100%;
-}
+
 
 #arrowIngredient{
     position: absolute;
@@ -200,14 +196,23 @@ section {
 }
 
 .dropdown-menu {
+    height: auto;
     overflow: hidden;
     column-count: 3;
 }
 
+#ingredients{
+    background-color: #0d6efd;
+    color: white;
+    width: 100%;
+    overflow: auto;
+    height: 400px;
+}
 
 .show li {
     float: left;
-    margin: 5px;
+    margin: 5px 40px;
+    padding-right: 50px;
 }
 
 
@@ -262,7 +267,7 @@ section {
 }
 
 .dropdown-toggle:focus{
-    width: 500px;
+    width: 50vw;
 }
 
 #errorMessage{
